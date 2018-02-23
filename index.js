@@ -5,7 +5,7 @@ var LESSCompiler = require('broccoli-less-single');
 var path         = require('path');
 var merge        = require('lodash.merge');
 var mergeTrees   = require('broccoli-merge-trees');
-var checker      = require('ember-cli-version-checker');
+var VersionChecker      = require('ember-cli-version-checker');
 
 function LESSPlugin(optionsFn) {
   this.name = 'ember-cli-less';
@@ -36,7 +36,8 @@ module.exports = {
   project: this.project,
 
   shouldSetupRegistryInIncluded: function() {
-    return !checker.isAbove(this, '0.2.0');
+    const checker = new VersionChecker(this).for('ember-cli', 'npm');
+    return !checker.isAbove('0.2.0');
   },
 
   lessOptions: function() {
